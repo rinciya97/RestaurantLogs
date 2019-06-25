@@ -19,8 +19,9 @@ public class RestaurantLog {
 //    int required;
     String status;
     String rating;
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH:mm:ss")
     private Date lastUpdate;
+
 }
 
 

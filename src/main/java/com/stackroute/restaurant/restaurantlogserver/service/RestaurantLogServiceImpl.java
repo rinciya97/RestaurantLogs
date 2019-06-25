@@ -1,6 +1,7 @@
 package com.stackroute.restaurant.restaurantlogserver.service;
 
 import com.stackroute.restaurant.restaurantlogserver.domain.RestaurantLog;
+import com.stackroute.restaurant.restaurantlogserver.exceptions.RestaurantIdAlreadyExistsException;
 import com.stackroute.restaurant.restaurantlogserver.repository.RestaurantLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,17 @@ public class RestaurantLogServiceImpl implements RestaurantLogService {
         this.restaurantLogRepository=restaurantLogRepository;
     }
     @Override
-    public RestaurantLog saveRestaurantLog(RestaurantLog restaurantLog) throws Exception {
+    public RestaurantLog saveRestaurantLog(RestaurantLog restaurantLog) throws RestaurantIdAlreadyExistsException{
         if(restaurantLogRepository.existsById(restaurantLog.getRestaurantlogid()))
         {
-            throw new Exception("Restaurant Id already exists..");
+            throw new RestaurantIdAlreadyExistsException("RestaurantID already exists exception");
+        }
+        RestaurantLog savedrestaurantLog =restaurantLogRepository.save(restaurantLog);
+        if(savedrestaurantLog ==null)
+        {
+            throw new RestaurantIdAlreadyExistsException("RestaurantID already exist exception");
         }
 
-        RestaurantLog savedrestaurantLog =restaurantLogRepository.save(restaurantLog);
         return savedrestaurantLog;
     }
 

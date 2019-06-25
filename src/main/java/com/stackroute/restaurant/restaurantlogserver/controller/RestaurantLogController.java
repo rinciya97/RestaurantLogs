@@ -1,6 +1,7 @@
 package com.stackroute.restaurant.restaurantlogserver.controller;
 
 import com.stackroute.restaurant.restaurantlogserver.domain.RestaurantLog;
+import com.stackroute.restaurant.restaurantlogserver.exceptions.RestaurantIdAlreadyExistsException;
 import com.stackroute.restaurant.restaurantlogserver.service.RestaurantLogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class RestaurantLogController {
             restaurantLogService.saveRestaurantLog(restaurantLog);
             responseEntity=new ResponseEntity<String>("Successfully created", HttpStatus.CREATED);
         }
-        catch (Exception ex)
+        catch (RestaurantIdAlreadyExistsException ex)
         {
 
             responseEntity=new ResponseEntity<String>(ex.getMessage(),HttpStatus.CONFLICT);
