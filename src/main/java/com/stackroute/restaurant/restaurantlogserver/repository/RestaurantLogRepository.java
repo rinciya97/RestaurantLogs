@@ -1,6 +1,12 @@
 package com.stackroute.restaurant.restaurantlogserver.repository;
-import com.stackroute.restaurant.restaurantlogserver.domain.RestaurantLog;
+import com.stackroute.restaurant.restaurantlogserver.domain.Restaurant;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface RestaurantLogRepository extends MongoRepository<RestaurantLog,Integer>{
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface RestaurantLogRepository extends MongoRepository<Restaurant,String>{
+    @Query("{ 'userName' : ?0 },{}")
+    Restaurant getRestaurantByName(String userName);
 }
